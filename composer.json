@@ -1,0 +1,24 @@
+{
+    "name": "picoss/yousign-bundle",
+    "description": "Symfony2 YouSign bundle",
+    "keywords": [
+        "Symfony2",
+        "bundle",
+        "YouSign"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Romain HONEL",
+            "email": "romain.honel@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Picoss\\YouSignBundle\\": ""
+        }
+    },
+    "require": {
+        "yousign/yousign-api-client": "1.3.*"
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="picoss_yousign.api.class">Picoss\YousingBundle\Yousign\YsApi</parameter>
+    </parameters>
+
+    <services>
+        <service id="picoss_yousign.api" class="%picoss_yousign.api.class%">
+            <argument>%picoss_yousign.environment%</argument>
+            <argument>%picoss_yousign.login%</argument>
+            <argument>%picoss_yousign.password%</argument>
+            <argument>%picoss_yousign.api_key%</argument>
+            <argument>%picoss_yousign.is_encrypted_password%</argument>
+        </service>
+    </services>
+</container>
