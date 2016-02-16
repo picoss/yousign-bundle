@@ -2,34 +2,31 @@
 
 namespace Picoss\YousignBundle\Yousign;
 
-use YousignAPI\YsApi as BaseYsApi;
+use Picoss\YousignBundle\Api\SignatureApi;
+use Symfony\Component\Routing\RouterInterface;
 
-class YsApi extends BaseYsApi
+class YsApi
 {
+    /**
+     * Yousign client api
+     *
+     * @var ClientApi
+     */
+    protected $client;
 
-    public function __construct($environment = YsApi::API_ENV_DEMO, $login = null, $password = null, $apiKey = null, $isEncryptedPassword = false)
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
+
+    public function __construct(ClientApi $client, RouterInterface $router)
     {
-        if ($isEncryptedPassword === false) {
-            $password = $this->encryptPassword($password);
-        }
-
-        $this
-            ->setEnvironment($environment)
-            ->setLogin($login)
-            ->setPassword($password)
-            ->setApiKey($apiKey)
-        ;
+        $this->client = $client;
+        $this->router = $router;
     }
 
-    public function setSSL($enabled = false, $certClientLocation = null, $caChainClientLocation = null, $privateKeyClientLocation = null, $privateKeyClientPassword = null)
+    public function signature()
     {
-        $this
-            ->setEnabledSSL($enabled)
-            ->setCertClientLocation($certClientLocation)
-            ->setCaChainClientLocation($caChainClientLocation)
-            ->setPrivateKeyClientLocation($privateKeyClientLocation)
-            ->setPrivateKeyClientPassword($privateKeyClientPassword)
-        ;
+        return new SignatureApi($this->client, $this->router);
     }
-
 }

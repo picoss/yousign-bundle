@@ -5,16 +5,22 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="picoss_yousign.client_api.class">Picoss\YousignBundle\Yousign\ClientApi</parameter>
         <parameter key="picoss_yousign.api.class">Picoss\YousignBundle\Yousign\YsApi</parameter>
     </parameters>
 
     <services>
-        <service id="picoss_yousign.api" class="%picoss_yousign.api.class%">
+        <service id="picoss_yousign.client_api" class="%picoss_yousign.client_api.class%">
             <argument>%picoss_yousign.environment%</argument>
             <argument>%picoss_yousign.login%</argument>
             <argument>%picoss_yousign.password%</argument>
             <argument>%picoss_yousign.api_key%</argument>
             <argument>%picoss_yousign.is_encrypted_password%</argument>
+        </service>
+
+        <service id="picoss_yousign.api" class="%picoss_yousign.api.class%">
+            <argument type="service" id="picoss_yousign.client_api"/>
+            <argument type="service" id="router"/>
         </service>
     </services>
 </container>
