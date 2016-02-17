@@ -4,6 +4,7 @@ namespace Picoss\YousignBundle\Api;
 
 use Picoss\YousignBundle\Model\Cosigner;
 use Picoss\YousignBundle\Model\File;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -180,35 +181,51 @@ class SignatureApi extends BaseApi
      * Get iframe url to display in an application
      *
      * @param $token
-     * @param null $target
-     * @param null $callbackRoute
-     * @param null $successRoute
-     * @param null $cancelRoute
-     * @param null $tpl
+     * @param array $options
      * @return string
      */
-    public function getIframeUrl($token, $target = null, $callbackRoute = null, $successRoute = null, $cancelRoute = null, $tpl = null)
+    public function getIframeUrl($token, array $options = array())
     {
         $iframeUrl = $this->root->getIframeUrl($token);
 
-        $queryString = array();
-        if (null !== $target) {
-            $queryString['urltarget'] = $target;
-        }
-        if (null !== $callbackRoute) {
-            $queryString['urlcallback'] = $this->router->generate($callbackRoute, array(), RouterInterface::ABSOLUTE_URL);
-        }
-        if (null !== $successRoute) {
-            $queryString['urlsuccess'] = $this->router->generate($successRoute, array(), RouterInterface::ABSOLUTE_URL);
-        }
-        if (null !== $cancelRoute) {
-            $queryString['urlcancel'] = $this->router->generate($cancelRoute, array(), RouterInterface::ABSOLUTE_URL);
-        }
-        if (null !== $tpl) {
-            $queryString['tpl'] = $tpl;
-        }
+        $resolver = new OptionsResolver();
+        $this->configureIframeOptions($resolver);
+        $options = $resolver->resolve($options);
 
-        return $iframeUrl . (count($queryString) ? '?' . http_build_query($queryString) : '');
+        unset($options['urlcallbackparams'], $options['urlsuccessparams'], $options['urlcancelparams']);
+
+        return $iframeUrl . (count($options) ? '?' . http_build_query($options) : '');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    private function configureIframeOptions(OptionsResolver $resolver)
+    {
+        $router = $this->router;
+        $resolver
+            ->setDefaults(array(
+                'urltarget' => '_top',
+                'urlcallbackparams' => array(),
+                'urlsuccessparams' => array(),
+                'urlcancelparams' => array(),
+            ))
+            ->setAllowedValues(array(
+                'urltarget' => array('_top', '_parent', '_blank')
+            ))
+            ->setDefined(array(
+                'urlcallback', 'urlsuccess', 'urlcancel', 'tpl',
+            ))
+            ->setNormalizer('urlcallback', function (Options $options, $value) use($router) {
+                return $router->generate($value, $options['urlcallbackparams'], RouterInterface::ABSOLUTE_URL);
+            })
+            ->setNormalizer('urlsuccess', function (Options $options, $value) use($router) {
+                return $router->generate($value, $options['urlsuccessparams'], RouterInterface::ABSOLUTE_URL);
+            })
+            ->setNormalizer('urlcancel', function (Options $options, $value) use($router) {
+                return $router->generate($value, $options['urlcancelparams'], RouterInterface::ABSOLUTE_URL);
+            })
+        ;
     }
 
     /**
