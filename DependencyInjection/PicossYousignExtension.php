@@ -32,13 +32,24 @@ class PicossYousignExtension extends Extension
         $container->setParameter('picoss_yousign.is_encrypted_password', $config['is_encrypted_password']);
 
         if ($config['ssl']['enabled'] == true) {
-            $definition = $container->getDefinition('picoss_yousign.api');
+            $definition = $container->getDefinition('picoss_yousign.client_api');
             $definition->addMethodCall('setSSL', array(
                 $config['ssl']['enabled'],
                 $config['ssl']['cert_client_location'],
                 $config['ssl']['ca_chain_client_location'],
                 $config['ssl']['private_key_client_location'],
                 $config['ssl']['private_key_client_password'],
+            ));
+        }
+
+        if ($config['proxy']['enabled'] == true) {
+            $definition = $container->getDefinition('picoss_yousign.client_api');
+            $definition->addMethodCall('setProxy', array(
+                $config['proxy']['enabled'],
+                $config['proxy']['host'],
+                $config['proxy']['port'],
+                $config['proxy']['username'],
+                $config['proxy']['password'],
             ));
         }
     }
