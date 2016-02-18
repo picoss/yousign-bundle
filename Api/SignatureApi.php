@@ -129,7 +129,6 @@ class SignatureApi extends BaseApi
     {
         try {
             $result = $this->root->getCosignedFileFromIdDemand($idDemand, $idFile);
-            dump($result);
             return $this->castResponseToEntity($result, $this->fileModelClassName);
         } catch (\Exception $e) {
         }
