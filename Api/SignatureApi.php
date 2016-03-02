@@ -50,7 +50,7 @@ class SignatureApi extends BaseApi
         $aFile = array($file->toArray());
         $aCosigner = array($cosigner->toArray());
         $aVisible = array(
-            $file->getIdFile() => $visibleOptions,
+            $file->getIdFile() => array($visibleOptions),
         );
 
         try {
