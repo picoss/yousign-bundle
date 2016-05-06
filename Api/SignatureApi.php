@@ -111,6 +111,7 @@ class SignatureApi extends BaseApi
     {
         try {
             $result = $this->root->getCosignInfoFromToken($token);
+            dump($result);
             return $this->castResponseToEntity($result, $this->signatureModelClassName);
         } catch (\Exception $e) {
         }
@@ -208,6 +209,7 @@ class SignatureApi extends BaseApi
                 'urlcallbackparams' => array(),
                 'urlsuccessparams' => array(),
                 'urlcancelparams' => array(),
+                'needconso' => true,
             ))
             ->setAllowedValues(array(
                 'urltarget' => array('_top', '_parent', '_blank')
@@ -223,6 +225,9 @@ class SignatureApi extends BaseApi
             })
             ->setNormalizer('urlcancel', function (Options $options, $value) use($router) {
                 return $router->generate($value, $options['urlcancelparams'], RouterInterface::ABSOLUTE_URL);
+            })
+            ->setNormalizer('needconso', function (Options $options, $value) {
+                return $value ? 1 : 0;
             })
         ;
     }
