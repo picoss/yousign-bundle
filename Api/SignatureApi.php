@@ -26,6 +26,46 @@ class SignatureApi extends BaseApi
     protected $fileModelClassName = 'Picoss\\YousignBundle\\Model\\File';
 
     /**
+     * Create a single signature demand for a many users on a single file
+     *
+     * @param File $file
+     * @param array $cosigners
+     * @param array $visibleOptions
+     * @param null $message
+     * @param array $options
+     * @return bool|mixed
+     */
+    public function create(File $file, array $cosigners, array $visibleOptions = array(), $message = null, array $options = array())
+    {
+        $resolver = new OptionsResolver();
+        $this->configureCreateOptions($resolver);
+        $options = $resolver->resolve($options);
+
+        $aFile = array($file->toArray());
+
+        $aCosigners = [];
+        $aVisibles = [];
+        foreach ($cosigners as $k => $cosigner) {
+            $aCosigners[] = $cosigner->toArray();
+            // visibleOptions
+            $visibleResolver = new OptionsResolver();
+            $this->configureVisibleOptions($visibleResolver);
+            $visibleOptionsOfCosigner = $visibleResolver->resolve($visibleOptions[$k]);
+            $visibleOptionsOfCosigner['mail'] = $cosigner->getMail();
+
+            $aVisibles[$file->getIdFile()][] = $visibleOptionsOfCosigner;
+        }
+
+        try {
+            $result = $this->root->initCoSign($aFile, $aCosigners, $aVisibles, $message, $options);
+            return $this->castResponseToEntity($result, $this->signatureModelClassName);
+        } catch (\Exception $e) {
+        }
+
+        return false;
+    }
+
+    /**
      * Create a single signature demand for a single user on a single file
      *
      * @param File $file
