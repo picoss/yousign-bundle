@@ -111,7 +111,6 @@ class SignatureApi extends BaseApi
     {
         try {
             $result = $this->root->getCosignInfoFromToken($token);
-            dump($result);
             return $this->castResponseToEntity($result, $this->signatureModelClassName);
         } catch (\Exception $e) {
         }
