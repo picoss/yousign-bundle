@@ -26,7 +26,7 @@ class SignatureApi extends BaseApi
     protected $fileModelClassName = 'Picoss\\YousignBundle\\Model\\File';
 
     /**
-     * Create a single signature demand for a many users on a single file
+     * Create a single signature demand for many users on a single file
      *
      * @param File $file
      * @param array $cosigners
@@ -151,7 +151,7 @@ class SignatureApi extends BaseApi
     {
         try {
             $result = $this->root->getCosignInfoFromToken($token);
-            dump($result);
+
             return $this->castResponseToEntity($result, $this->signatureModelClassName);
         } catch (\Exception $e) {
         }
