@@ -32,10 +32,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->enumNode('env')->values(array(Environment::DEMO, Environment::PROD))->cannotBeEmpty()->isRequired()->end()
-                ->scalarNode('username')->cannotBeEmpty()->isRequired()->end()
-                ->scalarNode('password')->cannotBeEmpty()->isRequired()->end()
-                ->scalarNode('api_key')->cannotBeEmpty()->isRequired()->end()
+                ->enumNode('env')->values(array(Environment::DEMO, Environment::PROD))->defaultValue(Environment::DEMO)->isRequired()->end()
+                ->scalarNode('username')->isRequired()->end()
+                ->scalarNode('password')->isRequired()->end()
+                ->scalarNode('api_key')->isRequired()->end()
                 ->arrayNode('soap_options')
                     ->useAttributeAsKey('name')
                     ->prototype('scalar')->end()
