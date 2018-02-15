@@ -63,6 +63,20 @@ picoss_yousign:
     password: yousign_password
 ```
 
+Note: If you need to pass some options to the saop client, add soap_options config:
+```yaml
+# config/packages/picoss_yousign.yml
+picoss_yousign:
+    env: demo #demo or prod
+    api_key: yousign_api_key
+    username: yousign_username
+    password: yousign_password
+    soap_options:
+        trace: 1
+```
+
+Check `$options` argument of the soap client to see available options : http://php.net/manual/en/soapclient.soapclient.php
+
 ## 4: Usage
 
 ### 4.1: Test API connection
