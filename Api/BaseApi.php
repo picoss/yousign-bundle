@@ -1,44 +1,64 @@
 <?php
 
+/*
+ * This file is part of the YesWeHack BugBounty backend
+ *
+ * (c) Romain Honel <romain.honel@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Picoss\YousignBundle\Api;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Picoss\YousignBundle\Yousign\ClientApi;
+use Picoss\YousignBundle\Model\ModelBase;
+use Picoss\YousignBundle\Yousign\Client;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Class BaseApi
+ *
+ * @author Romain Honel <romain.honel@gmail.com>
+ */
 abstract class BaseApi
 {
     /**
-     * @var ClientApi
+     * @var Client
      */
-    protected $root;
+    protected $client;
 
     /**
      * @var RouterInterface
      */
     protected $router;
 
-    public function __construct(ClientApi $root, RouterInterface $router)
-    {
-        $this->root = $root;
-        $this->router = $router;
-    }
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
-     * Get errors returned by Yousign API
+     * BaseApi constructor.
      *
-     * @return array
+     * @param Client          $client
+     * @param RouterInterface $router
      */
-    public function getErrors()
+    public function __construct(Client $client, RouterInterface $router, LoggerInterface $logger)
     {
-        return $this->root->getErrors();
+        $this->client = $client;
+        $this->router = $router;
+        $this->logger = $logger;
     }
 
     /**
      * Cast Yousign API respose to a given entity
      *
-     * @param $response
-     * @param $entityClassName
+     * @param string $response
+     * @param string $entityClassName
+     *
      * @return mixed
      *
      * @throws \Exception
@@ -63,6 +83,7 @@ abstract class BaseApi
             throw new \Exception(sprintf('Class "%s" does not exists.', $entityClassName));
         }
 
+        /** @var ModelBase $entity */
         $entity = new $entityClassName();
 
         $responseReflection = new \ReflectionObject($response);
@@ -101,6 +122,13 @@ abstract class BaseApi
         return $entity;
     }
 
+    /**
+     * Is the given array an associative array
+     *
+     * @param array $array
+     *
+     * @return bool
+     */
     private function isAssociativeArray($array)
     {
         return array_keys($array) !== range(0, count($array) - 1);

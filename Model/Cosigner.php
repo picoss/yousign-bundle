@@ -1,9 +1,44 @@
 <?php
 
+/*
+ * This file is part of the YesWeHack BugBounty backend
+ *
+ * (c) Romain Honel <romain.honel@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Picoss\YousignBundle\Model;
 
+/**
+ * Class Cosigner
+ *
+ * @author Romain Honel <romain.honel@gmail.com>
+ */
 class Cosigner extends ModelBase
 {
+    const MODE_MAIL = 'mail';
+    const MODE_SMS = 'sms';
+    const MODE_MASS = 'mass';
+    const MODE_MANUAL = 'manual';
+    const MODE_PHOTO = 'photo';
+
+    const AUTH_MODE = [
+        self::MODE_MAIL,
+        self::MODE_SMS,
+        self::MODE_MASS,
+        self::MODE_MANUAL,
+        self::MODE_PHOTO,
+    ];
+
+    const LEVEL_LOW = 'LOW';
+    const LEVEL_HIGH = 'HIGH';
+
+    const PROOF_LEVEL = [
+        self::LEVEL_LOW,
+        self::LEVEL_HIGH,
+    ];
     /**
      * id
      *
@@ -220,6 +255,10 @@ class Cosigner extends ModelBase
      */
     public function setProofLevel($proofLevel)
     {
+        $proofLevel = strtoupper($proofLevel);
+        if (!in_array($proofLevel, self::PROOF_LEVEL)) {
+            throw new \InvalidArgumentException(sprintf('Invalid proof level "%s". Available proof levels: %s', $proofLevel, implode(',', self::PROOF_LEVEL)));
+        }
         $this->proofLevel = $proofLevel;
 
         return $this;
@@ -243,6 +282,10 @@ class Cosigner extends ModelBase
      */
     public function setAuthenticationMode($authenticationMode)
     {
+        $authenticationMode = strtolower($authenticationMode);
+        if (!in_array($authenticationMode, self::AUTH_MODE)) {
+            throw new \InvalidArgumentException(sprintf('Invalid authentication mode "%s". Available modes: %s', $authenticationMode, implode(',', self::AUTH_MODE)));
+        }
         $this->authenticationMode = $authenticationMode;
 
         return $this;

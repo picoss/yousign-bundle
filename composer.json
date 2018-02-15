@@ -1,16 +1,17 @@
 {
     "name": "picoss/yousign-bundle",
+    "type": "symfony-bundle",
     "description": "Symfony2 YouSign bundle",
     "keywords": [
-        "Symfony2",
+        "symfony2",
         "bundle",
-        "YouSign"
+        "yousign"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Romain HONEL",
-            "email": "romain.honel@gmail.com"
+            "name": "Romain Honel",
+            "email": "r.honel@yeswehack.com"
         }
     ],
     "autoload": {
@@ -19,8 +20,19 @@
         }
     },
     "require": {
-        "yousign/yousign-api-client": "1.3.*",
-        "doctrine/collections": "1.*",
-        "symfony/options-resolver": "2.8.*"
+        "php": ">=5.5.9",
+        "yousign/yousign-api-client": "^2.0",
+        "symfony/framework-bundle": "~2.8 || ^3.0 || ^4.0",
+        "symfony/options-resolver": "~2.8 || ^3.0 || ^4.0",
+        "doctrine/collections": "~1.2",
+        "psr/log": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
     }
 }

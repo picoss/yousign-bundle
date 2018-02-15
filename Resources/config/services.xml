@@ -5,22 +5,37 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="picoss_yousign.client_api.class">Picoss\YousignBundle\Yousign\ClientApi</parameter>
-        <parameter key="picoss_yousign.api.class">Picoss\YousignBundle\Yousign\YsApi</parameter>
+        <parameter key="picoss_yousign.authentication.class">Yousign\Authentication</parameter>
+        <parameter key="picoss_yousign.environment.class">Picoss\YousignBundle\Yousign\Environment</parameter>
+        <parameter key="picoss_yousign.client.class">Picoss\YousignBundle\Yousign\Client</parameter>
+        <parameter key="picoss_yousign.api.class">Picoss\YousignBundle\Yousign\YousignApi</parameter>
     </parameters>
 
     <services>
-        <service id="picoss_yousign.client_api" class="%picoss_yousign.client_api.class%">
-            <argument>%picoss_yousign.environment%</argument>
-            <argument>%picoss_yousign.login%</argument>
-            <argument>%picoss_yousign.password%</argument>
+        <service id="picoss_yousign.environment" class="%picoss_yousign.environment.class%" public="false">
+            <argument>%picoss_yousign.env%</argument>
+        </service>
+        <service id="picoss_yousign.authentication" class="%picoss_yousign.authentication.class%" public="false">
             <argument>%picoss_yousign.api_key%</argument>
-            <argument>%picoss_yousign.is_encrypted_password%</argument>
+            <argument>%picoss_yousign.username%</argument>
+            <argument>%picoss_yousign.password%</argument>
         </service>
-
+        <service id="picoss_yousign.client" class="%picoss_yousign.client.class%" public="false">
+            <factory class="%picoss_yousign.client.class%" method="create"></factory>
+            <argument type="service" id="picoss_yousign.authentication" />
+            <argument type="service" id="picoss_yousign.environment" />
+            <argument type="service" id="logger" on-invalid="ignore" />
+            <argument>%picoss_yousign.soap_options%</argument>
+            <tag name="monolog.logger" channel="yousign" />
+        </service>
         <service id="picoss_yousign.api" class="%picoss_yousign.api.class%">
-            <argument type="service" id="picoss_yousign.client_api"/>
-            <argument type="service" id="router"/>
+            <argument type="service" id="picoss_yousign.client" />
+            <argument type="service" id="router" />
+            <call method="setLogger">
+                <argument type="service" id="logger" on-invalid="ignore" />
+            </call>
+            <tag name="monolog.logger" channel="yousign" />
         </service>
+        <service id="%picoss_yousign.api.class%" alias="picoss_yousign.api" />
     </services>
 </container>

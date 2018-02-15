@@ -1,7 +1,21 @@
 <?php
 
+/*
+ * This file is part of the YesWeHack BugBounty backend
+ *
+ * (c) Romain Honel <romain.honel@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Picoss\YousignBundle\Model;
 
+/**
+ * Class File
+ *
+ * @author Romain Honel <romain.honel@gmail.com>
+ */
 class File extends ModelBase
 {
     /**
@@ -73,15 +87,15 @@ class File extends ModelBase
      * @var array $subObjects
      */
     protected $subObjects = [
-        'cosignersWithStatus' => 'Picoss\\YousignBundle\\Model\\Cosigner',
+        'cosignersWithStatus' => Cosigner::class,
     ];
 
     public function toArray()
     {
         return array(
-            'idFile' => $this->idFile,
             'name' => $this->name,
             'content' => $this->content,
+            'pdfPassword' => $this->pdfPassword,
         );
     }
 

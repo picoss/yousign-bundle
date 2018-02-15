@@ -1,7 +1,21 @@
 <?php
 
+/*
+ * This file is part of the YesWeHack BugBounty backend
+ *
+ * (c) Romain Honel <romain.honel@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Picoss\YousignBundle\Model;
 
+/**
+ * Class ModelBase
+ *
+ * @author Romain Honel <romain.honel@gmail.com>
+ */
 abstract class ModelBase
 {
     /**
@@ -12,20 +26,6 @@ abstract class ModelBase
     protected $subObjects = [];
 
     /**
-     * Createable fields
-     *
-     * @var array
-     */
-    protected $createableFields = [];
-
-    /**
-     * Updateable fields
-     *
-     * @var array
-     */
-    protected $updateableFields = [];
-
-    /**
      * Get model relations
      *
      * @return array
@@ -33,25 +33,5 @@ abstract class ModelBase
     public function getSubObjects()
     {
         return $this->subObjects;
-    }
-
-    /**
-     * Get creation fields
-     *
-     * @return array
-     */
-    public function getCreateableFields()
-    {
-        return $this->createableFields;
-    }
-
-    /**
-     * Get uptadeable fields
-     *
-     * @return array
-     */
-    public function getUpdateableFields()
-    {
-        return $this->updateableFields;
     }
 }

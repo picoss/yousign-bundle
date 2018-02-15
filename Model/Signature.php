@@ -1,7 +1,21 @@
 <?php
 
+/*
+ * This file is part of the YesWeHack BugBounty backend
+ *
+ * (c) Romain Honel <romain.honel@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Picoss\YousignBundle\Model;
 
+/**
+ * Class Signature
+ *
+ * @author Romain Honel <romain.honel@gmail.com>
+ */
 class Signature extends ModelBase
 {
     const STATUS_COSIGNATURE_EVENT_REQUEST_PENDING = 'COSIGNATURE_EVENT_REQUEST_PENDING';
@@ -16,6 +30,13 @@ class Signature extends ModelBase
      * @var string
      */
     protected $idDemand;
+
+    /**
+     * title
+     *
+     * @var string
+     */
+    protected $title;
 
     /**
      * fileInfos
@@ -72,10 +93,10 @@ class Signature extends ModelBase
      * @var array $subObjects
      */
     protected $subObjects = [
-        'fileInfos' => 'Picoss\\YousignBundle\\Model\\File',
-        'cosignerInfos' => 'Picoss\\YousignBundle\\Model\\Cosigner',
-        'initiator' => 'Picoss\\YousignBundle\\Model\\Initiator',
-        'tokens' => 'Picoss\\YousignBundle\\Model\\Token',
+        'fileInfos' => File::class,
+        'cosignerInfos' => Cosigner::class,
+        'initiator' => Initiator::class,
+        'tokens' => Token::class,
     ];
 
     /**
@@ -89,9 +110,19 @@ class Signature extends ModelBase
     }
 
     /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Get fileInfos
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return File|\Doctrine\Common\Collections\ArrayCollection
      */
     public function getFileInfos()
     {
@@ -101,7 +132,7 @@ class Signature extends ModelBase
     /**
      * Get tokens
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return Token|\Doctrine\Common\Collections\ArrayCollection
      */
     public function getTokens()
     {
@@ -131,7 +162,7 @@ class Signature extends ModelBase
     /**
      * Get cosignerInfos
      *
-     * @return string
+     * @return Cosigner|\Doctrine\Common\Collections\ArrayCollection
      */
     public function getCosignerInfos()
     {
@@ -141,7 +172,7 @@ class Signature extends ModelBase
     /**
      * Get initiator
      *
-     * @return string
+     * @return Initiator
      */
     public function getInitiator()
     {
