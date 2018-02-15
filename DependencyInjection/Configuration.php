@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->enumNode('env')->values(array(Environment::DEMO, Environment::PROD))->defaultValue(Environment::DEMO)->isRequired()->end()
+                ->scalarNode('env')->defaultValue(Environment::DEMO)->isRequired()->end()
                 ->scalarNode('username')->isRequired()->end()
                 ->scalarNode('password')->isRequired()->end()
                 ->scalarNode('api_key')->isRequired()->end()
