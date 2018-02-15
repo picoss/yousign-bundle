@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="picoss_yousign.authentication.class">Yousign\Authentication</parameter>
+        <parameter key="picoss_yousign.authentication.class">Picoss\YousignBundle\Yousign\Authentication</parameter>
         <parameter key="picoss_yousign.environment.class">Picoss\YousignBundle\Yousign\Environment</parameter>
         <parameter key="picoss_yousign.client.class">Picoss\YousignBundle\Yousign\Client</parameter>
         <parameter key="picoss_yousign.api.class">Picoss\YousignBundle\Yousign\YousignApi</parameter>

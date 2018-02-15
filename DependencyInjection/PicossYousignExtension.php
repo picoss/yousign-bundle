@@ -39,7 +39,7 @@ class PicossYousignExtension extends Extension
         $container->setParameter('picoss_yousign.env', $config['env']);
         $container->setParameter('picoss_yousign.api_key', $config['api_key']);
         $container->setParameter('picoss_yousign.username', $config['username']);
-        $container->setParameter('picoss_yousign.password', Authentication::buildHashedPassword($config['password']));
+        $container->setParameter('picoss_yousign.password', $config['password']);
         $container->setParameter('picoss_yousign.soap_options', $config['soap_options']);
 
         $container->registerForAutoconfiguration(YousignApi::class);

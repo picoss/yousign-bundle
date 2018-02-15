@@ -39,11 +39,9 @@ class PicossYousignExtensionTest extends TestCase
 
         $extension->load([$config], $container);
 
-        $hashedPassword = Authentication::buildHashedPassword('pa$$word');
-
         $this->assertSame('demo', $container->getParameter('picoss_yousign.env'));
         $this->assertSame('login', $container->getParameter('picoss_yousign.username'));
-        $this->assertSame($hashedPassword, $container->getParameter('picoss_yousign.password'));
+        $this->assertSame('pa$$word', $container->getParameter('picoss_yousign.password'));
         $this->assertSame('123abc', $container->getParameter('picoss_yousign.api_key'));
 
         $this->assertTrue($container->hasDefinition('picoss_yousign.environment'));
