@@ -122,7 +122,7 @@ class Demand
      */
     public function setOptions(array $options)
     {
-        $this->options = $this->visibleOptionsResolver->resolve($options);
+        $this->options = $this->optionsResolver->resolve($options);
 
         return $this;
     }
