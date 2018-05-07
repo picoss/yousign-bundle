@@ -189,7 +189,7 @@ class TestController extends Controller
 | getInfosFromCosignatureDemand() | Get signature informations | Picoss\YousignBundle\Model\Signature |
 | getListCosign() | Search for signatures demand | Picoss\YousignBundle\Model\Signature[] |
 | cancelCosignatureDemand() | Cancel a signature process | boolean |
-| alertCosigners() | Alter cosigners | boolean |
+| alertCosigners() | Alert cosigners | boolean |
 | isPDFSignable() | Check if the given PDF is signable | boolean |
 | updateCosigner() | Update a cosigner informations | boolean |
 
