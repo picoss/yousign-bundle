@@ -38,7 +38,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('api_key')->isRequired()->end()
                 ->arrayNode('soap_options')
                     ->useAttributeAsKey('name')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                 ->end()
             ->end()
         ;

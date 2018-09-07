@@ -45,6 +45,13 @@ class Client extends BaseClient
 
         foreach(Services::listing() as $service) {
             try {
+                if (array_key_exists('stream_context_options', $options)) {
+                    $streamContextOptions = $options['stream_context_options'];
+                    $context = stream_context_create($streamContextOptions);
+                    $options['stream_context'] = $context;
+                    unset($options['stream_context_options']);
+                }
+
                 $wsdl = sprintf('%s/%s/%s?wsdl', $environment->getHost(), $service, $service);
                 $soapClient = new \SoapClient($wsdl, $options);
 
