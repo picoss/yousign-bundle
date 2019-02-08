@@ -26,7 +26,7 @@ class ClientTest extends TestCase
     public function testClientFactory()
     {
         $authentication = new Authentication('123');
-        $environment = new Environment('demo');
+        $environment = new Environment();
         $logger = new NullLogger();
 
         $client = Client::create($authentication, $environment, $logger);

@@ -28,7 +28,8 @@ class PicossYousignExtensionTest extends TestCase
         $container = new ContainerBuilder();
 
         $config = [
-            'env' => 'demo',
+            'api_url' => 'http://api_url',
+            'iframe_url' => 'http://iframe_url',
             'username' => 'login',
             'password' => 'pa$$word',
             'api_key' => '123abc',
@@ -39,7 +40,8 @@ class PicossYousignExtensionTest extends TestCase
 
         $extension->load([$config], $container);
 
-        $this->assertSame('demo', $container->getParameter('picoss_yousign.env'));
+        $this->assertSame('http://api_url', $container->getParameter('picoss_yousign.api_url'));
+        $this->assertSame('http://iframe_url', $container->getParameter('picoss_yousign.iframe_url'));
         $this->assertSame('login', $container->getParameter('picoss_yousign.username'));
         $this->assertSame('pa$$word', $container->getParameter('picoss_yousign.password'));
         $this->assertSame('123abc', $container->getParameter('picoss_yousign.api_key'));

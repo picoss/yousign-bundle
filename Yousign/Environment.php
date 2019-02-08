@@ -10,36 +10,30 @@
 
 namespace Picoss\YousignBundle\Yousign;
 
-use Yousign\Environment as BaseEnvironment;
-
 /**
  * Class Environment
  *
  * @author Romain Honel <romain.honel@gmail.com>
  */
-class Environment extends BaseEnvironment
+class Environment
 {
     /**
      * @var string
      */
-    protected $iframeEnvironment;
+    private $apiUrl;
 
     /**
-     * @var array
+     * @var string
      */
-    private $mappingIframeHosts = array(
-        self::DEMO => 'https://demo.yousign.fr',
-        self::PROD => 'https://yousign.fr',
-    );
+    private $iframeUrl;
 
     /**
      * {@inheritdoc}
      */
-    public function __construct($environment = null)
+    public function __construct(string $apiUrl = 'https://apidemo.yousign.fr:8181', string $iframeUrl = 'https://demo.yousign.fr')
     {
-        parent::__construct($environment);
-
-        $this->iframeEnvironment = $environment;
+        $this->apiUrl = $apiUrl;
+        $this->iframeUrl = $iframeUrl;
     }
 
     /**
@@ -47,6 +41,14 @@ class Environment extends BaseEnvironment
      */
     public function getIframeHost()
     {
-        return $this->mappingIframeHosts[$this->iframeEnvironment];
+        return $this->iframeUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->apiUrl;
     }
 }

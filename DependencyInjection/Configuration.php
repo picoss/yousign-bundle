@@ -32,7 +32,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('env')->defaultValue(Environment::DEMO)->isRequired()->end()
+                ->scalarNode('api_url')->isRequired()->end()
+                ->scalarNode('iframe_url')->isRequired()->end()
                 ->scalarNode('username')->isRequired()->end()
                 ->scalarNode('password')->isRequired()->end()
                 ->scalarNode('api_key')->isRequired()->end()

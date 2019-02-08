@@ -14,7 +14,8 @@
     <services>
         <defaults public="false" />
         <service id="picoss_yousign.environment" class="%picoss_yousign.environment.class%">
-            <argument>%picoss_yousign.env%</argument>
+            <argument>%picoss_yousign.api_url%</argument>
+            <argument>%picoss_yousign.iframe_url%</argument>
         </service>
         <service id="picoss_yousign.authentication" class="%picoss_yousign.authentication.class%">
             <argument>%picoss_yousign.api_key%</argument>

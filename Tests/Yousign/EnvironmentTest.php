@@ -22,7 +22,7 @@ class EnvironmentTest extends TestCase
 {
     public function testDemo()
     {
-        $environment = new Environment('demo');
+        $environment = new Environment();
 
         $this->assertSame('https://apidemo.yousign.fr:8181', $environment->getHost());
         $this->assertSame('https://demo.yousign.fr', $environment->getIframeHost());
@@ -30,17 +30,9 @@ class EnvironmentTest extends TestCase
 
     public function testProd()
     {
-        $environment = new Environment('prod');
+        $environment = new Environment('https://api.yousign.fr:8181', 'https://yousign.fr');
 
         $this->assertSame('https://api.yousign.fr:8181', $environment->getHost());
         $this->assertSame('https://yousign.fr', $environment->getIframeHost());
-    }
-
-    /**
-     * @expectedException Yousign\Exception\EnvironmentException
-     */
-    public function testInvalidEnv()
-    {
-        new Environment('foo');
     }
 }

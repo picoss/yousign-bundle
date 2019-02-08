@@ -57,7 +57,8 @@ file of your project:
 ```yaml
 # config/packages/picoss_yousign.yml
 picoss_yousign:
-    env: demo #demo or prod
+    api_url: https://apidemo.yousign.fr:8181
+    iframe_url: https://demo.yousign.fr
     api_key: yousign_api_key
     username: yousign_username
     password: yousign_password
@@ -67,7 +68,8 @@ Note: If you need to pass some options to the saop client, add soap_options conf
 ```yaml
 # config/packages/picoss_yousign.yml
 picoss_yousign:
-    env: demo #demo or prod
+    api_url: https://apidemo.yousign.fr:8181
+    iframe_url: https://demo.yousign.fr
     api_key: yousign_api_key
     username: yousign_username
     password: yousign_password

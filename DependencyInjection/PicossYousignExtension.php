@@ -36,7 +36,8 @@ class PicossYousignExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        $container->setParameter('picoss_yousign.env', $config['env']);
+        $container->setParameter('picoss_yousign.api_url', $config['api_url']);
+        $container->setParameter('picoss_yousign.iframe_url', $config['iframe_url']);
         $container->setParameter('picoss_yousign.api_key', $config['api_key']);
         $container->setParameter('picoss_yousign.username', $config['username']);
         $container->setParameter('picoss_yousign.password', $config['password']);
